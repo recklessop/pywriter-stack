@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+  influxdb:
+    image: influxdb:latest
+    env_file:
+      - 'env.influxdb'
+    volumes:
+      # Data persistency
+      # sudo mkdir -p /srv/docker/influxdb/data
+      - /home/justin/dbmon/influxdb/data:/var/lib/influxdb
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3003:3000"
+    depends_on:
+      - influxdb
+    env_file:
+      - 'env.grafana'
+    user: "0"
+    links:
+      - influxdb
+    volumes:
+      # Data persistency
+      # sudo mkdir -p /srv/docker/grafana/data; chown 472:472 /srv/docker/grafana/data
+      - /home/justin/dbmon/grafana/data:/var/lib/grafana
+
+  pywriter:
+    image: recklessop/pywriter:latest
+    depends_on:
+      - influxdb
+    links:
+      - influxdb
+    env_file:
+      - 'env.pywriter'
