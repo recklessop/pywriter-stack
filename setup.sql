@@ -4,7 +4,6 @@ Step 2 - Execute the following Query to setup the Person Table in the TestDB
 USE [TestDB]
 GO
 
-/****** Object:  Table [dbo].[Person]    Script Date: 4/29/2020 2:41:27 AM ******/
 SET ANSI_NULLS ON
 GO
 
